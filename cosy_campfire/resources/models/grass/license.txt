@@ -1,0 +1,8 @@
+Model Information:
+* title:	realistics grass 10
+* source:	https://sketchfab.com/3d-models/realistics-grass-10-afc09f9c2c6941f8b19baa7e5744da92
+* author:	POLYSCAN (https://sketchfab.com/POLYSCAN3D)
+
+Model License:
+* license type:	SKETCHFAB Standard (https://sketchfab.com/licenses)
+* requirements:	Under basic restrictions, use worldwide, on all types of media, commercially or not, and in all types of derivative works

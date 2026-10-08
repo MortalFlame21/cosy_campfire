@@ -1,0 +1,8 @@
+Model Information:
+* title:	Tree 3d model linden tree
+* source:	https://sketchfab.com/3d-models/tree-3d-model-linden-tree-c3a7af0f4e8140798e75f9805189ccdc
+* author:	High Quality Work (https://sketchfab.com/Varleyhal)
+
+Model License:
+* license type:	SKETCHFAB Standard (https://sketchfab.com/licenses)
+* requirements:	Under basic restrictions, use worldwide, on all types of media, commercially or not, and in all types of derivative works
