@@ -38,7 +38,7 @@ public:
 			data["objects"].push_back(o);
 		for (const auto& pl : _point_lights)
 			data["point_lights"].push_back(pl);
-		// don't need to save directional light atm
+		data["directional_light"] = _directional_light;
 		std::ofstream ofs("resources/scene.json");
 		ofs << data.dump(1, ' ');
 	}

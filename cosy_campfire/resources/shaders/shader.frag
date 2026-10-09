@@ -24,8 +24,10 @@ struct Material {
 	float shininess; // not really used atm
 };
 
+const int g_MAX_POINT_LIGHTS = 4;
+
 uniform DirectionalLight u_directional_light;
-uniform PointLight u_point_light;
+uniform PointLight u_point_lights[g_MAX_POINT_LIGHTS];
 uniform Material u_material;
 uniform vec3 u_camera_position;
 
@@ -44,7 +46,8 @@ float attenuation(float constant, float linear, float quadratic, float distance)
 
 void main() {    
 	vec3 result = directionalLight(u_material, u_directional_light);
-	result += pointLight(u_material, u_point_light);
+	for (int i = 0; i < g_MAX_POINT_LIGHTS; ++i)
+		result += pointLight(u_material, u_point_lights[i]);
 	result += texture(u_material.emission1, p_tex_coords).rgb;
 	p_frag_color = vec4(result, 1.0);
 }

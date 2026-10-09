@@ -41,13 +41,13 @@ public:
 		ImGui::NewFrame();
 		ImGui::Begin("Scene");
 
-		if (ImGui::TreeNode("Scene objects")) {
+		if (ImGui::TreeNode("Scene Objects")) {
 			for (int i{}; auto& o : scene.objects()) {
 				ImGui::PushID(i++);
                 if (ImGui::TreeNode(o.model().path().c_str())) {
 					ImGui::SliderFloat3("Position", glm::value_ptr(o.position()), -20.f, 20.f);
 					ImGui::SliderFloat3("Scale", glm::value_ptr(o.scale()), 0.f, 10.f);
-					ImGui::SliderFloat3("Rotation", glm::value_ptr(o.rotation()), 0.f, 90.f);
+					ImGui::SliderFloat3("Rotation", glm::value_ptr(o.rotation()), 0.f, 360.f);
 					ImGui::TreePop();
 				}
 				ImGui::PopID();
@@ -72,8 +72,8 @@ public:
 					ImGui::SliderFloat3("Diffuse", glm::value_ptr(l.diffuse), -20.f, 20.f);
 					ImGui::SliderFloat3("Specular", glm::value_ptr(l.specular), -20.f, 20.f);
 					ImGui::SliderFloat("Constant", &l.constant, 0.f, 1.f, "%.9f");
-					ImGui::SliderFloat("Linear", &l.linear, 0.f, 1.f, "%.9f");
-					ImGui::SliderFloat("Quadratic", &l.quadratic, 0.f, 1.f, "%.9f");
+					ImGui::SliderFloat("Linear", &l.linear, 0.f, 10.f, "%.9f");
+					ImGui::SliderFloat("Quadratic", &l.quadratic, 0.f, 10.f, "%.9f");
 					ImGui::TreePop();
 				}
 				ImGui::PopID();
@@ -83,7 +83,7 @@ public:
 		ImGui::Separator();
 		if (ImGui::SmallButton("Save Current Scene")) 
 			scene.save();
-		ImGui::ShowDemoWindow();
+		//ImGui::ShowDemoWindow();
 
         ImGui::End();
 		ImGui::Render();

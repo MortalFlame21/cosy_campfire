@@ -48,7 +48,7 @@ private:
 
 	Camera() = default;
 
-	glm::vec3 _position{};
+	glm::vec3 _position{0.5f, 1.f, 4.f}; // look at campfire and horse, beautiful
 	glm::vec3 _front{0.f, 0.f, -1.f};
 	glm::vec3 _up{0.f, 1.f, 0.f};
 	float _near{0.1f};
