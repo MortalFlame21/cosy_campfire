@@ -50,11 +50,32 @@ struct adl_serializer<GameObject> {
 };
 
 template<> 
+struct adl_serializer<DirectionalLight> {
+    static DirectionalLight from_json(const nlohmann::json& j) {
+		return {
+			.color     = bb::to_vec<3>(j, "color"),
+			.direction = bb::to_vec<3>(j, "direction"),
+			.ambient   = bb::to_vec<3>(j, "ambient"),
+			.diffuse   = bb::to_vec<3>(j, "diffuse"),
+			.specular  = bb::to_vec<3>(j, "specular"),
+		};
+    }
+
+    static void to_json(nlohmann::json& j, const DirectionalLight& p) {
+		j["color"]     = bb::to_json(p.color);
+		j["direction"] = bb::to_json(p.direction);
+		j["ambient"]   = bb::to_json(p.ambient);
+		j["diffuse"]   = bb::to_json(p.diffuse);
+		j["specular"]  = bb::to_json(p.specular);
+    }
+};
+
+template<> 
 struct adl_serializer<PointLight> {
     static PointLight from_json(const nlohmann::json& j) {
 		return {
-			.position  = bb::to_vec<3>(j, "position"),
 			.color     = bb::to_vec<3>(j, "color"),
+			.position  = bb::to_vec<3>(j, "position"),
 			.ambient   = bb::to_vec<3>(j, "ambient"),
 			.diffuse   = bb::to_vec<3>(j, "diffuse"),
 			.specular  = bb::to_vec<3>(j, "specular"),
@@ -65,8 +86,8 @@ struct adl_serializer<PointLight> {
     }
 
     static void to_json(nlohmann::json& j, const PointLight& p) {
-		j["position"]  = bb::to_json(p.position);
 		j["color"]     = bb::to_json(p.color);
+		j["position"]  = bb::to_json(p.position);
 		j["ambient"]   = bb::to_json(p.ambient);
 		j["diffuse"]   = bb::to_json(p.diffuse);
 		j["specular"]  = bb::to_json(p.specular);

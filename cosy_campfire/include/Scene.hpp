@@ -7,6 +7,7 @@
 #include "NamedObjects.hpp"
 #include "GameObject.hpp"
 #include "json_util.hpp"
+
 class Scene {
 public:
 	Scene() {
@@ -22,10 +23,12 @@ public:
 		for (const auto& o : data["point_lights"]) {
 			_point_lights.push_back(std::move(o.get<PointLight>()));
 		}
+
+		_directional_light = std::move(data["directional_light"].get<DirectionalLight>());
 	}
 
 	auto& objects() { return _objects; }
-	auto& directional_light() { return _dir_light; }
+	auto& directional_light() { return _directional_light; }
 	auto& point_lights() { return _point_lights; }
 
 	void save() {
@@ -35,17 +38,12 @@ public:
 			data["objects"].push_back(o);
 		for (const auto& pl : _point_lights)
 			data["point_lights"].push_back(pl);
+		// don't need to save directional light atm
 		std::ofstream ofs("resources/scene.json");
 		ofs << data.dump(1, ' ');
 	}
 private:
 	std::vector<GameObject> _objects{};
-	DirectionalLight _dir_light{
-		.color     = glm::vec3{1.f},
-		.direction = glm::vec3{0.f, -1.f, 0.f},
-		.ambient   = glm::vec3{0.2f},
-		.diffuse   = glm::vec3{0.5f},
-		.specular  = glm::vec3{1.f},
-	};
+	DirectionalLight _directional_light{};
 	std::vector<PointLight> _point_lights{};
 };

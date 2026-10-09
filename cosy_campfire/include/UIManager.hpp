@@ -54,6 +54,14 @@ public:
 			}
 			ImGui::TreePop();
 		}
+		if (auto& l{scene.directional_light()}; ImGui::TreeNode("Scene Directional Light")) {
+			ImGui::SliderFloat3("Direction", glm::value_ptr(l.direction), -20.f, 20.f);
+			ImGui::ColorEdit3("Color", glm::value_ptr(l.color));
+			ImGui::SliderFloat3("Ambient", glm::value_ptr(l.ambient), -20.f, 20.f);
+			ImGui::SliderFloat3("Diffuse", glm::value_ptr(l.diffuse), -20.f, 20.f);
+			ImGui::SliderFloat3("Specular", glm::value_ptr(l.specular), -20.f, 20.f);
+			ImGui::TreePop();
+		}
 		if (ImGui::TreeNode("Scene Point Lights")) {
 			for (int i{}; auto& l : scene.point_lights()) {
 				ImGui::PushID(i);
