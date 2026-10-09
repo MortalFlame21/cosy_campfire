@@ -52,10 +52,29 @@ public:
 				}
 				ImGui::PopID();
 			}
-			if (ImGui::SmallButton("Save Current Scene")) 
-				scene.save();
 			ImGui::TreePop();
 		}
+		if (ImGui::TreeNode("Scene Point Lights")) {
+			for (int i{}; auto& l : scene.point_lights()) {
+				ImGui::PushID(i);
+                if (ImGui::TreeNode(std::format("Light {}", i++).c_str())) {
+					ImGui::SliderFloat3("Position", glm::value_ptr(l.position), -20.f, 20.f);
+					ImGui::ColorEdit3("Color", glm::value_ptr(l.color));
+					ImGui::SliderFloat3("Ambient", glm::value_ptr(l.ambient), -20.f, 20.f);
+					ImGui::SliderFloat3("Diffuse", glm::value_ptr(l.diffuse), -20.f, 20.f);
+					ImGui::SliderFloat3("Specular", glm::value_ptr(l.specular), -20.f, 20.f);
+					ImGui::SliderFloat("Constant", &l.constant, 0.f, 1.f, "%.9f");
+					ImGui::SliderFloat("Linear", &l.linear, 0.f, 1.f, "%.9f");
+					ImGui::SliderFloat("Quadratic", &l.quadratic, 0.f, 1.f, "%.9f");
+					ImGui::TreePop();
+				}
+				ImGui::PopID();
+			}
+			ImGui::TreePop();
+		}
+		ImGui::Separator();
+		if (ImGui::SmallButton("Save Current Scene")) 
+			scene.save();
 		ImGui::ShowDemoWindow();
 
         ImGui::End();

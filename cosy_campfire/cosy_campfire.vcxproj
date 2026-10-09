@@ -153,6 +153,7 @@
     <ClInclude Include="include\Camera.hpp" />
     <ClInclude Include="include\GameObject.hpp" />
     <ClInclude Include="include\Input.hpp" />
+    <ClInclude Include="include\json_util.hpp" />
     <ClInclude Include="include\Mesh.hpp" />
     <ClInclude Include="include\Model.hpp" />
     <ClInclude Include="include\NamedObjects.hpp" />

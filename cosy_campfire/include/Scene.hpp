@@ -3,12 +3,10 @@
 #include <iostream>
 #include <fstream>
 
-#include <nlohmann/json.hpp>
-
 #include "Camera.hpp"
 #include "NamedObjects.hpp"
 #include "GameObject.hpp"
-
+#include "json_util.hpp"
 class Scene {
 public:
 	Scene() {
@@ -20,17 +18,23 @@ public:
 		for (const auto& o : data["objects"]) {
 			_objects.push_back(std::move(o.get<GameObject>()));
 		}
+
+		for (const auto& o : data["point_lights"]) {
+			_point_lights.push_back(std::move(o.get<PointLight>()));
+		}
 	}
 
 	auto& objects() { return _objects; }
-	auto& light() { return _dir_light; }
+	auto& directional_light() { return _dir_light; }
+	auto& point_lights() { return _point_lights; }
 
 	void save() {
 		using namespace nlohmann;
 		json data{};
-		for (const auto& o : _objects) {
+		for (const auto& o : _objects)
 			data["objects"].push_back(o);
-		}
+		for (const auto& pl : _point_lights)
+			data["point_lights"].push_back(pl);
 		std::ofstream ofs("resources/scene.json");
 		ofs << data.dump(1, ' ');
 	}
@@ -43,4 +47,5 @@ private:
 		.diffuse   = glm::vec3{0.5f},
 		.specular  = glm::vec3{1.f},
 	};
+	std::vector<PointLight> _point_lights{};
 };

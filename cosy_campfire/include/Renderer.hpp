@@ -20,10 +20,21 @@ public:
 		ShaderManager::get("default").setUniformM("u_projection", 1, GL_FALSE, projection);
 		ShaderManager::get("default").setUniformV("u_camera_position", camera.position());
 		
-		ShaderManager::get("default").setUniformV("u_dir_light.direction", scene.light().direction);
-		ShaderManager::get("default").setUniformV("u_dir_light.ambient", scene.light().ambient);
-		ShaderManager::get("default").setUniformV("u_dir_light.diffuse", scene.light().diffuse);
-		ShaderManager::get("default").setUniformV("u_dir_light.specular", scene.light().specular);
+		ShaderManager::get("default").setUniformV("u_directional_light.direction", scene.directional_light().direction);
+		ShaderManager::get("default").setUniformV("u_directional_light.ambient",   scene.directional_light().ambient);
+		ShaderManager::get("default").setUniformV("u_directional_light.diffuse",   scene.directional_light().diffuse);
+		ShaderManager::get("default").setUniformV("u_directional_light.specular",  scene.directional_light().specular);
+
+		for (const auto& l : scene.point_lights()) {
+			ShaderManager::get("default").setUniformV("u_point_light.position",  l.position);
+			ShaderManager::get("default").setUniformV("u_point_light.color",     l.color);
+			ShaderManager::get("default").setUniformV("u_point_light.ambient",   l.ambient);
+			ShaderManager::get("default").setUniformV("u_point_light.diffuse",   l.diffuse);
+			ShaderManager::get("default").setUniformV("u_point_light.specular",  l.specular);
+			ShaderManager::get("default").setUniformV("u_point_light.constant",  l.constant);
+			ShaderManager::get("default").setUniformV("u_point_light.linear",    l.linear);
+			ShaderManager::get("default").setUniformV("u_point_light.quadratic", l.quadratic);
+		}
 
 		for (auto& o : scene.objects()) {
 			o.draw(ShaderManager::get("default"));

@@ -12,14 +12,6 @@ struct Vertex {
 	glm::vec2 tex_coord{};
 };
 
-struct DirectionalLight {
-	glm::vec3 color{};
-	glm::vec3 direction{};
-	glm::vec3 ambient{};
-	glm::vec3 diffuse{};
-	glm::vec3 specular{};
-};
-
 // named objects: vao, vbo, ebo 
 
 class Vbo {
