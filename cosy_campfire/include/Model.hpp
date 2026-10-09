@@ -90,8 +90,10 @@ private:
 			auto* material{scene->mMaterials[mesh->mMaterialIndex]};
 			auto d_maps{loadTextures(material, aiTextureType_DIFFUSE)};
 			auto s_maps{loadTextures(material, aiTextureType_SPECULAR)};
+			auto e_maps{loadTextures(material, aiTextureType_EMISSIVE)};
 			textures.insert(textures.end(), std::make_move_iterator(d_maps.begin()), std::make_move_iterator(d_maps.end()));
 			textures.insert(textures.end(), std::make_move_iterator(s_maps.begin()), std::make_move_iterator(s_maps.end()));
+			textures.insert(textures.end(), std::make_move_iterator(e_maps.begin()), std::make_move_iterator(e_maps.end()));
 			shininess = material->Get(AI_MATKEY_SHININESS, shininess); // is this even right ??
 		}
 
@@ -100,21 +102,20 @@ private:
 
 	std::vector<std::string> loadTextures(aiMaterial* material, aiTextureType type) {
 		std::vector<std::string> textures{};
-		auto tex_type{(type == aiTextureType_DIFFUSE) ? Texture::Type::Diffuse : Texture::Type::Specular};
 		for (std::size_t i{}; i < material->GetTextureCount(type); ++i) {
 			aiString tex_path{}; // path of texture will be used as name/id
 			material->GetTexture(type, i, &tex_path);
 
 			// load new texture
 			if (!TextureManager::contains(tex_path.C_Str())) {
-				auto t{makeTexture(std::format("{}/{}", _directory, tex_path.C_Str()), tex_type)};
+				auto t{makeTexture(std::format("{}/{}", _directory, tex_path.C_Str()), type)};
 				TextureManager::load(tex_path.C_Str(), std::move(t));
 			}
 			textures.push_back(tex_path.C_Str());
 		}
 		// dumbass hack
-		if (type == aiTextureType_SPECULAR && material->GetTextureCount(type) == 0) {
-			textures.push_back("resources/textures/specular_none.png");
+		if ((type == aiTextureType_SPECULAR || type == aiTextureType_EMISSIVE) && material->GetTextureCount(type) == 0) {
+			textures.push_back((type == aiTextureType_SPECULAR) ? "specular_none" : "emission_none");
 		}
 		return textures;
 	}

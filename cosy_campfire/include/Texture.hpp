@@ -6,11 +6,10 @@
 
 #include <glad/glad.h>
 #include <stb/stb_image.h>
+#include <assimp/material.h>
 
 class Texture {
 public:
-	enum class Type { Normal, Diffuse, Specular, None };
-
 	Texture() {
 		glGenTextures(1, &_id); // generate and bind
 		glBindTexture(GL_TEXTURE_2D, _id);
@@ -40,7 +39,7 @@ public:
 		o._width = 0;
 		o._height = 0;
 		o._numColorChannels = 0;
-		o._type = Type::None;
+		o._type = aiTextureType_NONE;
 	}
 
 	Texture& operator=(Texture&& o) noexcept {
@@ -57,7 +56,7 @@ public:
 			o._width = 0;
 			o._height = 0;
 			o._numColorChannels = 0;
-			o._type = Type::None;
+			o._type = aiTextureType_NONE;
 		}
 		return *this;
 	}
@@ -93,18 +92,18 @@ public:
 
 	int height() const { return _height; }
 
-	void type(Texture::Type type) { _type = type; }
-	Type type() const { return _type; }
+	void type(aiTextureType type) { _type = type; }
+	aiTextureType type() const { return _type; }
 
 private:
 	GLuint _id{};
 	int _width{};
 	int _height{};
 	int _numColorChannels{};
-	Type _type{};
+	aiTextureType _type{};
 };
 
-inline Texture makeTexture(std::string_view path, Texture::Type type = Texture::Type::Normal) {
+inline Texture makeTexture(std::string_view path, aiTextureType type = aiTextureType_NONE) {
 	Texture t{path};
 	t.type(type);
 	return t;

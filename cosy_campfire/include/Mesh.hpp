@@ -37,11 +37,11 @@ public:
 		shader.use();
 
 		shader.setUniformV("u_material.shininess", _shininess);
-		for (std::size_t i{}, d_num{1}, s_num{1}; i < _textures.size(); ++i) {
+		for (std::size_t i{}, d_num{1}, s_num{1}, e_num{1}; i < _textures.size(); ++i) {
 			auto& t{TextureManager::get(_textures[i])};
 			t.bind(i);
-			const auto type{(t.type() == Texture::Type::Diffuse) ? "diffuse" : "specular"};
-			const auto n{((t.type() == Texture::Type::Diffuse) ? d_num : s_num)++};
+			const auto type{(t.type() == aiTextureType_DIFFUSE) ? "diffuse" : (t.type() == aiTextureType_SPECULAR) ? "specular" : "emission"};
+			const auto n{((t.type() == aiTextureType_DIFFUSE) ?  d_num : (t.type() == aiTextureType_SPECULAR) ? s_num : e_num)++};
 			shader.setUniformV(std::format("u_material.{}{}", type, n), i);
 		}
 		_vao.bind();

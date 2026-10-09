@@ -35,7 +35,8 @@ private:
 class TextureManager {
 public:
     static void init() {
-		load("resources/textures/specular_none.png", Texture{"resources/textures/specular_none.png"});
+		load("specular_none", makeTexture("resources/textures/black.png", aiTextureType_SPECULAR));
+		load("emission_none", makeTexture("resources/textures/black.png", aiTextureType_EMISSIVE));
 	}
 
 	static void load(const std::string& name, Texture&& texture) {

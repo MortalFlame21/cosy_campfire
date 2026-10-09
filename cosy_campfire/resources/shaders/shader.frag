@@ -8,6 +8,7 @@ struct DirectionalLight {
 };
 
 struct Material {
+	sampler2D emission1;
 	sampler2D specular1;
 	sampler2D diffuse1;
 	float shininess; // not really used atm
@@ -38,7 +39,9 @@ vec3 shading() {
 	float s = pow(max(dot(view_direction, light_reflect_direction), 0.0), 32.0);
 	vec3 specular = s * vec3(texture(u_material.specular1, p_tex_coords)) * u_dir_light.specular;
 
-	return ambient + diffuse + specular;
+	vec3 emission = texture(u_material.emission1, p_tex_coords).rgb;
+
+	return ambient + diffuse + specular + emission;
 }
 
 void main() {    

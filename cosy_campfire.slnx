@@ -3,5 +3,5 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
-  <Project Path="cosy_campfire/cosy_campfire.vcxproj" />
+  <Project Path="cosy_campfire/cosy_campfire.vcxproj" Id="60b8035e-fad5-4500-81b2-385ecb93ce4b" />
 </Solution>
